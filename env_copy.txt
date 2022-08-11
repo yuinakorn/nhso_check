@@ -6,3 +6,4 @@ CHARSET=
 TOKEN=
 USER_ID=
 NHSO_URL="http://ucws.nhso.go.th/ucwstokenp1/UCWSTokenP1?wsdl"
+SQL=
