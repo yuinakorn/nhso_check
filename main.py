@@ -45,7 +45,7 @@ for i in result:
         print(j, cid, ' =X death ')
 
         with connection.cursor() as cursor:
-            sql = "UPDATE check_death_ SET status_desc = %s, check_death_date = %s, is_death = 'Y' WHERE cid = %s"
+            sql = "UPDATE check_death SET status_desc = %s, check_death_date = %s, is_death = 'Y' WHERE cid = %s"
             cursor.execute(sql, (status_desc, now, cid))
             connection.commit()
 
@@ -60,7 +60,7 @@ for i in result:
         print(j, cid, ' => not death => ', maininscl, hmain, hsub, cardid, startdate, expdate)
 
         with connection.cursor() as cursor:
-            sql = "UPDATE check_death_ SET check_death_date = %s, is_death = 'N', TYPE = %s, HOSPMAIN = %s" \
+            sql = "UPDATE check_death SET check_death_date = %s, is_death = 'N', TYPE = %s, HOSPMAIN = %s" \
                   ", HOSPSUB = %s, CARDID = %s, REGISTER = %s, DATEEXP = %s  WHERE cid = %s"
             cursor.execute(sql, (now, maininscl, hmain, hsub, cardid, startdate, expdate, cid))
             connection.commit()
