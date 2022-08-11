@@ -15,7 +15,7 @@ connection = pymysql.connect(host=config_env["HOST"],
                              cursorclass=pymysql.cursors.DictCursor)
 
 with connection.cursor() as cursor:
-    sql = "SELECT cid FROM check_death LIMIT 1,31707"
+    sql = "SELECT cid FROM check_death LIMIT 31707,31707"
     cursor.execute(sql)
     result = cursor.fetchall()
 
