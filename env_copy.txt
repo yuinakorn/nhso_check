@@ -6,4 +6,3 @@ CHARSET=
 TOKEN=
 USER_ID=
 NHSO_URL="http://ucws.nhso.go.th/ucwstokenp1/UCWSTokenP1?wsdl"
-SQL="SELECT cid FROM check_death WHERE LEFT(cid,1) <> '0' LIMIT 10"

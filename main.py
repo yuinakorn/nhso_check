@@ -15,11 +15,13 @@ connection = pymysql.connect(host=config_env["HOST"],
                              cursorclass=pymysql.cursors.DictCursor)
 
 with connection.cursor() as cursor:
-    sql = config_env["SQL"]
+    sql = "SELECT cid FROM check_death_ WHERE LEFT(cid,2) <> '00'"
     cursor.execute(sql)
     result = cursor.fetchall()
 
 url = config_env["NHSO_URL"]
+
+j = 1
 
 for i in result:
     cid = i['cid']
@@ -37,18 +39,32 @@ for i in result:
     root = ET.fromstring(response.text)
 
     child = root[0][0][0]
+
     if child.find('status_desc') is not None:
         status_desc = child.find('status_desc').text
-        print('death => ', cid)
+        print(j, cid, ' =X death ')
 
         with connection.cursor() as cursor:
-            sql = "UPDATE check_death SET status_desc = %s, check_death_date = %s, is_death = 'Y' WHERE cid = %s"
+            sql = "UPDATE check_death_ SET status_desc = %s, check_death_date = %s, is_death = 'Y' WHERE cid = %s"
             cursor.execute(sql, (status_desc, now, cid))
             connection.commit()
 
     else:
-        print('not death')
+        maininscl = child.find('maininscl').text if child.find('maininscl') is not None else ''
+        hmain = child.find('hmain').text if child.find('hmain') is not None else ''
+        hsub = child.find('hsub').text if child.find('hsub') is not None else ''
+        cardid = child.find('cardid').text if child.find('cardid') is not None else ''
+        startdate = child.find('startdate').text if child.find('startdate') is not None else ''
+        expdate = child.find('expdate').text if child.find('expdate') is not None else ''
+
+        print(j, cid, ' => not death => ', maininscl, hmain, hsub, cardid, startdate, expdate)
+
         with connection.cursor() as cursor:
-            sql = "UPDATE check_death SET check_death_date = %s, is_death = 'N' WHERE cid = %s"
-            cursor.execute(sql, (now, cid))
+            sql = "UPDATE check_death_ SET check_death_date = %s, is_death = 'N', TYPE = %s, HOSPMAIN = %s" \
+                  ", HOSPSUB = %s, CARDID = %s, REGISTER = %s, DATEEXP = %s  WHERE cid = %s"
+            cursor.execute(sql, (now, maininscl, hmain, hsub, cardid, startdate, expdate, cid))
             connection.commit()
+
+    j += 1
+
+connection.close()
