@@ -1,7 +1,7 @@
 # nhso_check
 APP for checking the health insurance of the NHSO API 
 
-เป็น Application สำหรับบันทึกและตรวจสอบสิทธิ์การรักษาพยาบาลผ่าน API ของ สปสช.
+เป็น Application สำหรับเรียก API ของ สปสช. แล้วบันทึกข้อมูล เช่น สิทธิการรรักษาพยาบาล สถานะการมีชีวิต (alive status) ลงฐานข้อมูล
 
 ## Installation
 
@@ -14,6 +14,10 @@ https://www.python.org/downloads/
 https://pypi.python.org/pypi/pip
 
 ## Usage
+
+```
+git clone <this repo>
+```
 
 ```
 pip install --no-cache-dir --upgrade -r requirements.txt
