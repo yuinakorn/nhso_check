@@ -3,6 +3,8 @@ import requests
 import pymysql.cursors
 import xml.etree.ElementTree as ET
 
+import line_noti as line
+
 from dotenv import dotenv_values
 
 config_env = dotenv_values(".env")
@@ -15,8 +17,10 @@ connection = pymysql.connect(host=config_env["HOST"],
                              cursorclass=pymysql.cursors.DictCursor)
 
 with connection.cursor() as cursor:
+    # start sent line notify
+    line.sent_notify_message('NHSO_check API: Start')
     # YOUR CODE HERE # SUCH AS: sql = "SELECT cid FROM check_death"
-    sql = "SELECT cid FROM check_death LIMIT 1,31707"
+    sql = "SELECT cid FROM check_death WHERE is_death <> 'Y'"
     cursor.execute(sql)
     result = cursor.fetchall()
 
@@ -69,3 +73,5 @@ for i in result:
     j += 1
 
 connection.close()
+
+line.sent_notify_message('NHSO_check API: finish for ' + str(j-1) + ' records')
