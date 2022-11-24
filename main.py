@@ -61,17 +61,23 @@ for i in result:
         cardid = child.find('cardid').text if child.find('cardid') is not None else ''
         startdate = child.find('startdate').text if child.find('startdate') is not None else ''
         expdate = child.find('expdate').text if child.find('expdate') is not None else ''
+        ws_status_desc = child.find('ws_status_desc').text if child.find('ws_status_desc') is not None else ''
+        birthdate = child.find('birthdate').text if child.find('birthdate') is not None else ''
+        fname = child.find('fname').text if child.find('fname') is not None else ''
+        lname = child.find('lname').text if child.find('lname') is not None else ''
 
-        print(j, cid, ' => not death => ', maininscl, hmain, hsub, cardid, startdate, expdate)
+        print(j, cid, ' => not death => ', maininscl, hmain, hsub, cardid, startdate, expdate, birthdate, fname, lname,
+              ws_status_desc)
 
         with connection.cursor() as cursor:
             sql = "UPDATE check_death SET check_death_date = %s, is_death = 'N', TYPE = %s, HOSPMAIN = %s" \
-                  ", HOSPSUB = %s, CARDID = %s, REGISTER = %s, DATEEXP = %s  WHERE cid = %s"
-            cursor.execute(sql, (now, maininscl, hmain, hsub, cardid, startdate, expdate, cid))
+                  ", HOSPSUB = %s, CARDID = %s, REGISTER = %s, DATEEXP = %s, birthdate = %s, fname = %s, lname = %s  " \
+                  "WHERE cid = %s"
+            cursor.execute(sql, (now, maininscl, hmain, hsub, cardid, startdate, expdate, birthdate, fname, lname, cid))
             connection.commit()
 
     j += 1
 
 connection.close()
 
-line.sent_notify_message('NHSO_check API: finish for ' + str(j-1) + ' records')
+line.sent_notify_message('NHSO_check API: finish for ' + str(j - 1) + ' records')
