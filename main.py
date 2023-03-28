@@ -80,6 +80,6 @@ for i in result:
 
 connection.close()
 
-# line.sent_notify_message('NHSO_check API: finish for ' + str(j - 1) + ' records')
+line.sent_notify_message('NHSO_check API: finish for ' + str(j - 1) + ' records')
 
 
