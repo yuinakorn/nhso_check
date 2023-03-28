@@ -18,7 +18,7 @@ connection = pymysql.connect(host=config_env["HOST"],
 
 with connection.cursor() as cursor:
     # start sent line notify
-    line.sent_notify_message('NHSO_check API: Start')
+    # line.sent_notify_message('NHSO_check API: Start')
     # YOUR CODE HERE # SUCH AS: sql = "SELECT cid FROM check_death"
     sql = "SELECT cid FROM check_death WHERE is_death <> 'Y'"
     cursor.execute(sql)
@@ -51,6 +51,7 @@ for i in result:
 
         with connection.cursor() as cursor:
             sql = "UPDATE check_death SET status_desc = %s, check_death_date = %s, is_death = 'Y' WHERE cid = %s"
+            print(sql)
             cursor.execute(sql, (status_desc, now, cid))
             connection.commit()
 
@@ -73,6 +74,7 @@ for i in result:
             sql = "UPDATE check_death SET check_death_date = %s, is_death = 'N', TYPE = %s, HOSPMAIN = %s" \
                   ", HOSPSUB = %s, CARDID = %s, REGISTER = %s, DATEEXP = %s, birthdate = %s, fname = %s, lname = %s  " \
                   "WHERE cid = %s"
+            print(sql)
             cursor.execute(sql, (now, maininscl, hmain, hsub, cardid, startdate, expdate, birthdate, fname, lname, cid))
             connection.commit()
 
@@ -80,6 +82,6 @@ for i in result:
 
 connection.close()
 
-line.sent_notify_message('NHSO_check API: finish for ' + str(j - 1) + ' records')
+# line.sent_notify_message('NHSO_check API: finish for ' + str(j - 1) + ' records')
 
 
