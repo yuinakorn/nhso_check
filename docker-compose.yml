@@ -1,0 +1,7 @@
+version: '3'
+services:
+  main:
+    image: 'py_nhso_check:latest'
+    volumes:
+      - "./:/app"
+    restart: 'unless-stopped'
