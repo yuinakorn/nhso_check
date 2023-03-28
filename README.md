@@ -1,7 +1,6 @@
-# nhso_check
-APP for checking the health insurance of the NHSO API 
+# nhso check status
 
-เป็น Application สำหรับเรียก API ของ สปสช. แล้วบันทึกข้อมูล เช่น สิทธิการรรักษาพยาบาล สถานะการดายลงฐานข้อมูล
+โปรแกรมตรวจสอบสิทธิ์การรักษาพยาบาลและสถานะการมีชีวิตผ่านระบบ NHSO API และบันทึกลงฐานข้อมูล
 
 ## Installation
 
