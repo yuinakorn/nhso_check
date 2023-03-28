@@ -20,7 +20,7 @@ with connection.cursor() as cursor:
     # start sent line notify
     line.sent_notify_message('NHSO_check API: Start')
     # YOUR CODE HERE # SUCH AS: sql = "SELECT cid FROM check_death"
-    sql = "SELECT cid FROM check_death WHERE is_death <> 'Y' AND check_death_date <> CURRENT_DATE"
+    sql = "SELECT cid FROM check_death WHERE is_death <> 'Y'"
     cursor.execute(sql)
     result = cursor.fetchall()
 
@@ -63,7 +63,6 @@ for i in result:
         expdate = child.find('expdate').text if child.find('expdate') is not None else ''
         ws_status_desc = child.find('ws_status_desc').text if child.find('ws_status_desc') is not None else ''
         birthdate = child.find('birthdate').text if child.find('birthdate') is not None else ''
-        title_name = child.find('title_name').text if child.find('title_name') is not None else ''
         fname = child.find('fname').text if child.find('fname') is not None else ''
         lname = child.find('lname').text if child.find('lname') is not None else ''
 
@@ -72,11 +71,9 @@ for i in result:
 
         with connection.cursor() as cursor:
             sql = "UPDATE check_death SET check_death_date = %s, is_death = 'N', TYPE = %s, HOSPMAIN = %s" \
-                  ", HOSPSUB = %s, CARDID = %s, REGISTER = %s, DATEEXP = %s, birthdate = %s, title_name = %s" \
-                  ", fname = %s, lname = %s  " \
+                  ", HOSPSUB = %s, CARDID = %s, REGISTER = %s, DATEEXP = %s, birthdate = %s, fname = %s, lname = %s  " \
                   "WHERE cid = %s"
-            cursor.execute(sql, (now, maininscl, hmain, hsub, cardid, startdate, expdate, birthdate, title_name, fname,
-                                 lname, cid))
+            cursor.execute(sql, (now, maininscl, hmain, hsub, cardid, startdate, expdate, birthdate, fname, lname, cid))
             connection.commit()
 
     j += 1
