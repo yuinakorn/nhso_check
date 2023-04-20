@@ -21,7 +21,7 @@ git clone <this repo>
 ```
 pip install --no-cache-dir --upgrade -r requirements.txt
 ```
-    python main.py
+    docker exec -itd <container_name> bash -c "python main.py" 
     
 
 ## License
